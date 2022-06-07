@@ -16,12 +16,15 @@ import { User } from '../../users/entities/user.entity';
 @Entity()
 export class Message {
   @PrimaryGeneratedColumn()
-  @Field(() => ID)
   id: number;
+
+  @Column({ name: 'chat_message_id' })
+  @Field(() => ID, { name: 'id' })
+  chatMessageId: number;
 
   @ManyToOne(() => User)
   @Field(() => User)
-  @JoinColumn()
+  @JoinColumn({ name: 'from_user_id' })
   fromUser: User;
 
   @Column()
@@ -29,15 +32,14 @@ export class Message {
   text: string;
 
   @RelationId((m: Message) => m.fromUser)
-  @Column()
   fromUserId: number;
 
   @Field(() => Chat)
   @ManyToOne(() => Chat, chat => chat.messages)
-  @JoinColumn()
+  @JoinColumn({ name: 'chat_id' })
   chat: Chat;
 
-  @Column({ name: 'chatId' })
+  @RelationId((t: Message) => t.chat)
   chatId: number;
 
   @Field(() => GraphQLISODateTime)

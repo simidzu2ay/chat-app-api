@@ -1,4 +1,4 @@
-{
+module.exports = {
   "arrowParens": "avoid",
   "semi": true,
   "endOfLine": "lf",
@@ -6,5 +6,5 @@
   "singleQuote": true,
   "tabWidth": 2,
   "useTabs": false,
-  "plugins": ["prettier-plugin-organize-imports"]
+  "plugins": [require("prettier-plugin-organize-imports")]
 }

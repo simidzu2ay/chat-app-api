@@ -39,15 +39,12 @@ export class MessagesResolver {
         throw new BadRequestException('You are not a member of this chat');
 
       const newMessage = await this.messagesService.send(message, userId);
-      const userNewMessage = await this.messagesService.convertFromUserToDBSavingId(
-        newMessage.find(m => m.userId === userId)
-      )
 
       this.pubSub.publish('newMessage', {
-        newMessage: userNewMessage,
+        newMessage,
       });
 
-      return userNewMessage;
+      return newMessage;
     } else {
       throw new BadRequestException("Chat doesn't exists");
     }

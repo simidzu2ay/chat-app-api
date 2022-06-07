@@ -29,11 +29,14 @@ export class ChatsService {
   }
 
   async findOne(id: number) {
-    return await this.chatsRepository.findOne(id, {
+    return await this.chatsRepository.findOne({
+      where: {
+        id
+      },
       loadRelationIds: {
         relations: ['members'],
-        disableMixedMap: true,
-      },
+        disableMixedMap: true 
+      }
     });
   }
 }
