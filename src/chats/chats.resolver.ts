@@ -2,6 +2,7 @@ import {
   Args,
   Mutation,
   Parent,
+  Query,
   ResolveField,
   Resolver
 } from '@nestjs/graphql';
@@ -31,6 +32,15 @@ export class ChatsResolver {
       name: createChatInput.name,
       ownerId: userId
     });
+  }
+
+  @Query(() => [Chat], { name: 'chats' })
+  async getUsersChats(
+    @CurrentUserId() userId: number,
+    @Args('offset', { defaultValue: 0 }) offset: number,
+    @Args('count', { defaultValue: 10 }) count: number
+  ) {
+    return await this.chatsService.findUsersChats(userId, offset, count);
   }
 
   @ResolveField('members', () => [User])

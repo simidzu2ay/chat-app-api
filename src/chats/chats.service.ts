@@ -39,4 +39,15 @@ export class ChatsService {
       }
     });
   }
+
+  // TODO: Sort by last message time
+  async findUsersChats(userId: number, offset = 0, count = 10) {
+    return await this.chatsRepository
+      .createQueryBuilder('chat')
+      .skip(offset)
+      .take(count)
+      .leftJoinAndSelect('chat.members', 'members')
+      .where('members.id = :userId', { userId })
+      .getMany();
+  }
 }

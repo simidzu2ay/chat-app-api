@@ -38,6 +38,7 @@ type Chat {
 type Query {
   users: [User!]!
   user(id: Float!): User!
+  chats(offset: Float = 0, count: Float = 10): [Chat!]!
 }
 
 type Mutation {

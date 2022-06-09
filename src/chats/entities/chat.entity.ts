@@ -26,14 +26,15 @@ export class Chat {
 
   @Field()
   @ManyToOne(() => User)
-  @JoinColumn()
+  @JoinColumn({ name: 'owner_id' })
   owner: User;
 
   @RelationId((chat: Chat) => chat.owner)
-  @Column()
   ownerId: number;
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => User, {
+    cascade: true
+  })
   @Field(() => [User])
   @JoinTable()
   members: User[];
