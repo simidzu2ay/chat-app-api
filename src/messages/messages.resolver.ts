@@ -29,7 +29,7 @@ export class MessagesResolver {
 
   @Mutation(() => Message)
   async sendMessage(
-    @Args() message: SendMessageInput,
+    @Args('message') message: SendMessageInput,
     @CurrentUserId() userId: number
   ) {
     const chat = await this.chatsService.findOne(message.chatId);
