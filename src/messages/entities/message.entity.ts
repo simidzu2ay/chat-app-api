@@ -7,7 +7,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   RelationId,
-  UpdateDateColumn,
+  UpdateDateColumn
 } from 'typeorm';
 import { Chat } from '../../chats/entities/chat.entity';
 import { User } from '../../users/entities/user.entity';

@@ -8,7 +8,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  RelationId,
+  RelationId
 } from 'typeorm';
 import { Message } from '../../messages/entities/message.entity';
 import { User } from '../../users/entities/user.entity';

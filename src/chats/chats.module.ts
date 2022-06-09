@@ -11,8 +11,8 @@ import { Chat } from './entities/chat.entity';
   imports: [
     TypeOrmModule.forFeature([Chat]),
     forwardRef(() => MessagesModule),
-    UsersModule,
+    UsersModule
   ],
-  exports: [ChatsService],
+  exports: [ChatsService]
 })
 export class ChatsModule {}

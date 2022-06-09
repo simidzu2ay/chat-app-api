@@ -15,5 +15,4 @@ export class UsersResolver {
   async findOneById(@Args('id') id: number): Promise<User> {
     return await this.usersService.findOne(id);
   }
-
 }

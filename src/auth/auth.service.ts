@@ -25,19 +25,19 @@ export class AuthService {
   // TODO: Make sessions
   async getTokens(userId: number): Promise<JwtTokens> {
     const accessToken = await this.jwtServise.signAsync({
-      id: userId,
+      id: userId
     });
 
     const refreshToken = await this.jwtServise.signAsync(
       {
-        id: userId,
+        id: userId
       },
       { secret: this.configService.get('jwt.secret.refresh'), expiresIn: '1y' }
     );
 
     return {
       accessToken,
-      refreshToken,
+      refreshToken
     };
   }
 }

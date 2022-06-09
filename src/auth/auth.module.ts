@@ -18,12 +18,12 @@ import { JwtStrategy } from './strategy/jwt.strategy';
         return {
           secret: configService.get('jwt.secret.access'),
           signOptions: {
-            expiresIn: '1h',
-          },
+            expiresIn: '1h'
+          }
         };
-      },
+      }
     }),
-    UsersModule,
-  ],
+    UsersModule
+  ]
 })
 export class AuthModule {}

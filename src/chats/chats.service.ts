@@ -15,12 +15,12 @@ export class ChatsService {
       membersIds: createChatInput.members,
       messages: [],
       name: createChatInput.name,
-      ownerId: createChatInput.ownerId,
+      ownerId: createChatInput.ownerId
     });
 
     // ---->  https://github.com/typeorm/typeorm/issues/1795
     chat.members = createChatInput.members.map(member => ({
-      id: member,
+      id: member
     })) as any;
 
     const { id } = await this.chatsRepository.save(chat);
@@ -35,7 +35,7 @@ export class ChatsService {
       },
       loadRelationIds: {
         relations: ['members'],
-        disableMixedMap: true 
+        disableMixedMap: true
       }
     });
   }

@@ -22,7 +22,7 @@ import { UsersModule } from './users/users.module';
       debug: true,
       autoSchemaFile: path.join(__dirname, '..', 'schema.gql'),
       subscriptions: {
-        'graphql-ws': true,
+        'graphql-ws': true
       },
 
       context: context => {
@@ -32,9 +32,9 @@ import { UsersModule } from './users/users.module';
               ...context?.extra?.request,
               headers: {
                 ...context?.extra?.request?.headers,
-                ...context?.connectionParams,
-              },
-            },
+                ...context?.connectionParams
+              }
+            }
           };
         }
 
@@ -42,30 +42,30 @@ import { UsersModule } from './users/users.module';
       },
       cors: {
         origin: '*',
-        credentials: true,
-      },
+        credentials: true
+      }
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       database: 'chat-app',
       synchronize: true,
-      entities: ['dist/**/*.entity{.ts,.js}'],
+      entities: ['dist/**/*.entity{.ts,.js}']
     }),
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [configurationYaml],
+      load: [configurationYaml]
     }),
     UsersModule,
     MessagesModule,
     ChatsModule,
-    AuthModule,
+    AuthModule
   ],
 
   providers: [
     {
       provide: APP_GUARD,
-      useClass: GqlAuthGuard,
-    },
-  ],
+      useClass: GqlAuthGuard
+    }
+  ]
 })
 export class AppModule {}

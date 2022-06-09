@@ -22,7 +22,7 @@ export class MessagesService {
         fromUser: from,
         text: messageInput.text,
         chatMessageId: () =>
-          `((SELECT COALESCE(MAX(chat_message_id), 0) FROM message WHERE chat_id = ${messageInput.chatId}) + 1)`,
+          `((SELECT COALESCE(MAX(chat_message_id), 0) FROM message WHERE chat_id = ${messageInput.chatId}) + 1)`
       })
       .returning('*')
       .execute();

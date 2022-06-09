@@ -14,8 +14,8 @@ import { MessagesService } from './messages.service';
     TypeOrmModule.forFeature([Message, Chat]),
     UsersModule,
     forwardRef(() => ChatsModule),
-    PubSubModule,
+    PubSubModule
   ],
-  exports: [MessagesService],
+  exports: [MessagesService]
 })
 export class MessagesModule {}

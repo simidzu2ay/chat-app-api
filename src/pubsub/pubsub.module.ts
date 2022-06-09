@@ -5,11 +5,15 @@ const pubSub = new PubSub();
 
 const provider = {
   provide: 'PUB_SUB',
-  useValue: pubSub,
+  useValue: pubSub
+};
+
+export const Subscriptions = {
+  NEW_MESSAGE: 'newMessage'
 };
 
 @Module({
   providers: [provider],
-  exports: [provider],
+  exports: [provider]
 })
 export class PubSubModule {}

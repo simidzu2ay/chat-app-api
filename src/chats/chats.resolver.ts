@@ -3,10 +3,9 @@ import {
   Mutation,
   Parent,
   ResolveField,
-  Resolver,
+  Resolver
 } from '@nestjs/graphql';
 import { CurrentUserId } from '../auth/current-user.decorator';
-import { MessagesService } from '../messages/messages.service';
 import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
 import { ChatsService } from './chats.service';
@@ -17,13 +16,12 @@ import { Chat } from './entities/chat.entity';
 export class ChatsResolver {
   constructor(
     private readonly chatsService: ChatsService,
-    private readonly messagesServise: MessagesService,
     private readonly usersServise: UsersService
   ) {}
 
   @Mutation(() => Chat)
   async createChat(
-    @Args('input') createChatInput: CreateChatInput,
+    @Args('chat') createChatInput: CreateChatInput,
     @CurrentUserId() userId
   ) {
     const members = [...new Set([userId, ...createChatInput.members])];
@@ -31,7 +29,7 @@ export class ChatsResolver {
     return await this.chatsService.create({
       members,
       name: createChatInput.name,
-      ownerId: userId,
+      ownerId: userId
     });
   }
 

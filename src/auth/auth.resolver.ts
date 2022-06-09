@@ -34,14 +34,14 @@ export class AuthResolver {
     const passwordHash = await this.authService.hashPassword(data.password);
     const user = await this.usersService.create({
       passwordHash,
-      username: data.username,
+      username: data.username
     });
 
     return await this.authService.getTokens(user.id);
   }
 
   @Mutation(() => JwtTokens)
-  async logIn(@Args('input') logInData: LogInInput): Promise<JwtTokens> {
+  async logIn(@Args('data') logInData: LogInInput): Promise<JwtTokens> {
     const user = await this.usersService.findByName(logInData.username);
 
     if (user) {
@@ -60,7 +60,7 @@ export class AuthResolver {
 
   @Mutation(() => JwtTokens)
   async refresh(
-    @Args('input') { expiredToken, refreshToken }: RefreshTokenInput
+    @Args('data') { expiredToken, refreshToken }: RefreshTokenInput
   ) {
     try {
       await this.jwtService.verifyAsync(expiredToken);
@@ -68,7 +68,7 @@ export class AuthResolver {
       if (error.message === 'jwt expired') {
         // TODO: refractor & catch bad refresh token
         await this.jwtService.verifyAsync(refreshToken, {
-          secret: this.configService.get('jwt.secret.refresh'),
+          secret: this.configService.get('jwt.secret.refresh')
         });
 
         const decodedExpired = this.jwtService.decode(expiredToken) as Record<

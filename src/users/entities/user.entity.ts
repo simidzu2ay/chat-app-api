@@ -3,12 +3,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
+  PrimaryGeneratedColumn
 } from 'typeorm';
 
 enum AccountType {
   USER = 'user',
-  ADMIN = 'admin',
+  ADMIN = 'admin'
 }
 
 @ObjectType()
@@ -28,7 +28,7 @@ export class User {
   @Column({
     type: 'enum',
     enum: AccountType,
-    default: AccountType.USER,
+    default: AccountType.USER
   })
   type: AccountType;
 

@@ -12,7 +12,7 @@ export class CreateChatInput {
   @IsNumber(
     {},
     {
-      each: true,
+      each: true
     }
   )
   members: number[];
