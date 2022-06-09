@@ -21,7 +21,9 @@ export class UsersService {
   }
 
   async findOne(id: number): Promise<User> {
-    return await this.userRepositpry.findOne(id);
+    return await this.userRepositpry.findOne({
+      where: { id }
+    });
   }
 
   async findByName(name: string): Promise<User> {
