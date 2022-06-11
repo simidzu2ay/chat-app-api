@@ -49,7 +49,8 @@ import { UsersModule } from './users/users.module';
       type: 'postgres',
       database: 'chat-app',
       synchronize: true,
-      entities: ['dist/**/*.entity{.ts,.js}']
+      entities: ['dist/**/*.entity{.ts,.js}'],
+      cache: true
     }),
     ConfigModule.forRoot({
       isGlobal: true,

@@ -12,6 +12,7 @@ import { UsersService } from '../users/users.service';
 import { ChatsService } from './chats.service';
 import { CreateChatInput } from './dto/create-chat.input';
 import { Chat } from './entities/chat.entity';
+import { ChatWithLastMessage } from './entities/last-message.entity';
 
 @Resolver(() => Chat)
 export class ChatsResolver {
@@ -34,7 +35,7 @@ export class ChatsResolver {
     });
   }
 
-  @Query(() => [Chat], { name: 'chats' })
+  @Query(() => [ChatWithLastMessage], { name: 'chats' })
   async getUsersChats(
     @CurrentUserId() userId: number,
     @Args('offset', { defaultValue: 0 }) offset: number,

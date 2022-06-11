@@ -18,6 +18,13 @@ type JwtTokens {
   refreshToken: String!
 }
 
+type Chat {
+  id: ID!
+  name: String!
+  owner: User!
+  members: [User!]!
+}
+
 type Message {
   id: ID!
   fromUser: User!
@@ -28,17 +35,18 @@ type Message {
   from: User!
 }
 
-type Chat {
+type ChatWithLastMessage {
   id: ID!
   name: String!
   owner: User!
   members: [User!]!
+  lastMessage: Message
 }
 
 type Query {
   users: [User!]!
   user(id: Float!): User!
-  chats(offset: Float = 0, count: Float = 10): [Chat!]!
+  chats(offset: Float = 0, count: Float = 10): [ChatWithLastMessage!]!
 }
 
 type Mutation {
