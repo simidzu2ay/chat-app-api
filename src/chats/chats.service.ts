@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { Message } from '../messages/entities/message.entity';
 import { CreateChatInput } from './dto/create-chat.input';
 import { Chat } from './entities/chat.entity';
-import { ChatWithLastMessage } from './entities/last-message.entity';
 
 @Injectable()
 export class ChatsService {
@@ -44,12 +43,11 @@ export class ChatsService {
     });
   }
 
-  // TODO: Sort by last message time
   async findUsersChats(
     userId: number,
     offset = 0,
     count = 10
-  ): Promise<ChatWithLastMessage[]> {
+  ): Promise<Chat[]> {
     const chats = await this.chatsRepository
       .createQueryBuilder('chat')
       .skip(offset)
@@ -58,30 +56,40 @@ export class ChatsService {
       .where('members.id = :userId', { userId })
       .getMany();
 
-    const lastMessages = await this.messagesReposityry
+    // const lastMessages = await this.messagesReposityry
+    //   .createQueryBuilder('message')
+    //   .take(chats.length)
+    //   .orderBy('id', 'DESC')
+    //   .where('message.chat_id IN (:...chatIds)', {
+    //     chatIds: chats.map(c => c.id)
+    //   })
+    //   .getMany();
+
+    // const ChatsWithLastMessages = chats.map(chat => {
+    //   // Should help with large amount of data
+    //   const lastMessageIndex = lastMessages.findIndex(
+    //     message => message.chatId === chat.id
+    //   );
+    //   const lastMessage =
+    //     lastMessageIndex !== -1
+    //       ? lastMessages.splice(lastMessageIndex, 1)[0]
+    //       : null;
+
+    //   return {
+    //     ...chat,
+    //     lastMessage
+    //   } as ChatWithLastMessage;
+    // });
+
+    return chats;
+  }
+
+  async getLastMessage(chatId: number) {
+    return await this.messagesReposityry
       .createQueryBuilder('message')
-      .take(1)
+      .select()
+      .where('message.chat_id = :chatId', { chatId })
       .orderBy('id', 'DESC')
-      .where('message.chat_id IN (:...chatIds)', {
-        chatIds: chats.map(c => c.id)
-      })
-      .getMany();
-
-    const ChatsWithLastMessages = chats.map(chat => {
-      // Should help with large amount of data
-      const lastMessageIndex = lastMessages.findIndex(
-        message => message.chatId === chat.id
-      );
-      const lastMessage = lastMessages.splice(lastMessageIndex, 1)[0];
-
-      return {
-        ...chat,
-        lastMessage
-      } as ChatWithLastMessage;
-    });
-
-    console.log(ChatsWithLastMessages);
-
-    return ChatsWithLastMessages;
+      .getOne();
   }
 }

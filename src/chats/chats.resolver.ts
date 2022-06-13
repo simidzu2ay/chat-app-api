@@ -7,12 +7,12 @@ import {
   Resolver
 } from '@nestjs/graphql';
 import { CurrentUserId } from '../auth/current-user.decorator';
+import { Message } from '../messages/entities/message.entity';
 import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
 import { ChatsService } from './chats.service';
 import { CreateChatInput } from './dto/create-chat.input';
 import { Chat } from './entities/chat.entity';
-import { ChatWithLastMessage } from './entities/last-message.entity';
 
 @Resolver(() => Chat)
 export class ChatsResolver {
@@ -35,7 +35,7 @@ export class ChatsResolver {
     });
   }
 
-  @Query(() => [ChatWithLastMessage], { name: 'chats' })
+  @Query(() => [Chat], { name: 'chats' })
   async getUsersChats(
     @CurrentUserId() userId: number,
     @Args('offset', { defaultValue: 0 }) offset: number,
@@ -52,5 +52,10 @@ export class ChatsResolver {
   @ResolveField('owner', () => User)
   async getChatOwner(@Parent() parent: Chat) {
     return await this.usersServise.findOne(parent.ownerId);
+  }
+
+  @ResolveField('lastMessage', () => Message, { nullable: true })
+  async getChatLastMessage(@Parent() parent: Chat) {
+    return await this.chatsService.getLastMessage(parent.id);
   }
 }
