@@ -92,4 +92,16 @@ export class ChatsService {
       .orderBy('id', 'DESC')
       .getOne();
   }
+
+  async search(chatName: string, userId: number) {
+    return await this.chatsRepository
+      .createQueryBuilder('chat')
+      .select()
+      .where('LOWER(chat.name) like LOWER(:chatName)', {
+        chatName: `%${chatName}%`
+      })
+      .leftJoinAndSelect('chat.members', 'member')
+      .andWhere('member.id = :userId', { userId })
+      .getMany();
+  }
 }

@@ -29,4 +29,18 @@ export class MessagesService {
 
     return message.generatedMaps[0];
   }
+
+  // TODO: count & offset
+  async getMessages(chatId: number) {
+    // Get last ${num} messages from chat
+    const messages = await this.messagesRepository
+      .createQueryBuilder('message')
+      .select()
+      .where('message.chat_id = :chatId', { chatId })
+      .orderBy('chat_message_id', 'DESC')
+      .take(100)
+      .getMany();
+
+    return messages.sort((a, b) => a.chatMessageId - b.chatMessageId);
+  }
 }

@@ -32,7 +32,7 @@ import { UsersModule } from './users/users.module';
               ...context?.extra?.request,
               headers: {
                 ...context?.extra?.request?.headers,
-                ...context?.connectionParams
+                ...context?.connectionParams?.headers
               }
             }
           };

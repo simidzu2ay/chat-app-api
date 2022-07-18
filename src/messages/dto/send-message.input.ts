@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsInt, IsString, Length, Min } from 'class-validator';
 
 @InputType()
@@ -8,7 +8,7 @@ export class SendMessageInput {
   @Length(1, 1024 * 4)
   text: string;
 
-  @Field()
+  @Field(() => Int)
   @IsInt()
   @Min(1)
   chatId: number;

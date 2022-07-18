@@ -44,6 +44,14 @@ export class ChatsResolver {
     return await this.chatsService.findUsersChats(userId, offset, count);
   }
 
+  @Query(() => [Chat], {name: 'searchChat'})
+  async searchChats(
+    @CurrentUserId() userId: number,
+    @Args('query') query: string 
+  ) {
+    return await this.chatsService.search(query, userId);
+  }
+
   @ResolveField('members', () => [User])
   async getChatMembers(@Parent() parent: Chat) {
     return await this.usersServise.findMany(parent.membersIds);
@@ -58,4 +66,5 @@ export class ChatsResolver {
   async getChatLastMessage(@Parent() parent: Chat) {
     return await this.chatsService.getLastMessage(parent.id);
   }
+
 }

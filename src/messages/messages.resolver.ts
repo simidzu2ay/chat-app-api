@@ -1,8 +1,10 @@
 import { BadRequestException, Inject } from '@nestjs/common';
 import {
   Args,
+  Int,
   Mutation,
   Parent,
+  Query,
   ResolveField,
   Resolver,
   Subscription
@@ -48,6 +50,11 @@ export class MessagesResolver {
     return newMessage;
   }
 
+  @Query(() => [Message], { name: 'messages' })
+  async getChatMessages(@Args('chatId', { type: () => Int }) chatId: number) {
+    return await this.messagesService.getMessages(chatId);
+  }
+
   @Subscription(() => Message, {
     name: Subscriptions.NEW_MESSAGE,
     async filter(
@@ -62,7 +69,7 @@ export class MessagesResolver {
     }
   })
   async subscribeToNewMessages(
-    @Args('userId') userIdByUser: number,
+    @Args('userId', { type: () => Int }) userIdByUser: number,
     @CurrentUserId() userId: number
   ) {
     // I don't know any others ways to pass userId into variables in filter

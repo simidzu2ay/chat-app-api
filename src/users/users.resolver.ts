@@ -1,4 +1,4 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Query, Resolver } from '@nestjs/graphql';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 
@@ -12,7 +12,7 @@ export class UsersResolver {
   }
 
   @Query(() => User, { name: 'user' })
-  async findOneById(@Args('id') id: number): Promise<User> {
+  async findOneById(@Args('id', { type: () => ID }) id: number): Promise<User> {
     return await this.usersService.findOne(id);
   }
 }
